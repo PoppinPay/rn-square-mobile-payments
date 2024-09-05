@@ -36,6 +36,8 @@ RCT_EXTERN_METHOD(prepareToReadCardInfoOnce:(BOOL)storeSwipedCard
                   resolve:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject)
 
+RCT_EXTERN_METHOD(cancelReadingCardInfo:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
+
 RCT_EXTERN_METHOD(addReaderObserver:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
 
 RCT_EXTERN_METHOD(removeReaderObserver:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)

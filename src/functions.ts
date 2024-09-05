@@ -58,6 +58,10 @@ export const prepareToReadCardInfoOnce = (
   );
 };
 
+export const cancelReadingCardInfo = (): Promise<string> => {
+  return SquareMobilePayments.cancelReadingCardInfo();
+};
+
 export const addReaderObserver = (): Promise<void> => {
   console.log('Running addreader observer');
   return SquareMobilePayments.addReaderObserver();

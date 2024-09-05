@@ -92,6 +92,14 @@ class SquareMobilePayments: RCTEventEmitter {
   }  
 
   @objc
+  func cancelReadingCardInfo(_ resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
+    DispatchQueue.main.async {
+      MobilePaymentsSDK.shared.readCardInfoManager.cancelReadingCardInfo()
+      resolve("ReadCardInfoManager cancelReadingCardInfo completed")
+    }
+  }
+
+  @objc
   func addReaderObserver(_ resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
     DispatchQueue.main.async {
       MobilePaymentsSDK.shared.readerManager.add(self)
