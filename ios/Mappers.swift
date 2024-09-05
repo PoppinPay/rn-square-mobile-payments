@@ -7,6 +7,60 @@
 import SquareMobilePaymentsSDK
 
 class Mappers {
+
+  class func mapFromReadCardInfoError(_ error:ReadCardInfoError) -> String {
+    switch error {
+      case .cardError: return "cardError"
+      case .notAuthorized: return "notAuthorized"
+      case .readerError: return "readerError"
+      case .storeError: return "storeError"
+      case .unsupportedEntryMethod: return "unsupportedEntryMethod"
+      default: return "unknown"
+    }
+  }
+
+  class func mapFromCardHandle(_ handle:CardHandle) -> NSDictionary {
+    return [
+      "brand": mapFromCardBrand(handle.brand),
+      "cardholderName": handle.cardholderName ?? NSNull(),
+      "entryMethod": mapFromCardEntryMethod(handle.entryMethod),
+      "id": handle.id,
+      "isSwipedCardStored": handle.isSwipedCardStored,
+      "last4": handle.last4 ?? NSNull()
+    ]
+  }
+
+  class func mapFromCardBrand(_ brand:CardBrand) -> String {
+      switch brand {
+      case .americanExpress: return "americanExpress"
+      case .chinaUnionPay: return "chinaUnionPay"
+      case .discover: return "discover"
+      case .discoverDiners: return "discoverDiners"
+      case .ebt: return "ebt"
+      case .eftpos: return "eftpos"
+      case .felica: return "felica"
+      case .interac: return "interac"
+      case .jcb: return "jcb"
+      case .mastercard: return "mastercard"
+      case .otherBrand: return "otherBrand"
+      case .squareCapitalCard: return "squareCapitalCard"
+      case .squareGiftCard: return "squareGiftCard"
+      case .visa: return "visa"
+      default: return "unknown"
+    }
+  }
+
+  class func mapFromCardEntryMethod(_ entryMethod:CardEntryMethod) -> String {
+    switch entryMethod {
+    case .contactless: return "contactless"
+    case .emv: return "emv"
+    case .keyed: return "keyed"
+    case .onFile: return "onFile"
+    case .swiped: return "swiped"
+    default: return "unknown"
+    }
+  }
+
   class func mapFromReader(_ readerInfo: ReaderInfo) -> NSDictionary {
     return [
       "id": readerInfo.id,

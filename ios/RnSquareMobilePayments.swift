@@ -28,7 +28,7 @@ class SquareMobilePayments: RCTEventEmitter {
 
   @objc
   override func supportedEvents() -> [String]! {
-    return ["READER_ADDED", "READER_REMOVED", "READER_CHANGED"]
+    return ["READER_ADDED", "READER_REMOVED", "READER_CHANGED", "READ_CARDINFO_FAILED", "READ_CARDINFO_SUCCEEDED"]
   }
 
   @objc
@@ -66,6 +66,30 @@ class SquareMobilePayments: RCTEventEmitter {
       }
     }
   }
+
+@objc
+  func addReadCardInfoObserver(_ resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
+    DispatchQueue.main.async {
+      MobilePaymentsSDK.shared.readCardInfoManager.add(self)
+      resolve("ReadCardInfo observer successfully added")
+    }
+  }
+
+  @objc
+  func removeReadCardInfoObserver(_ resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
+    DispatchQueue.main.async {
+      MobilePaymentsSDK.shared.readCardInfoManager.remove(self)
+      resolve("ReadCardInfo observer successfully removed")
+    }
+  }
+
+  @objc
+  func prepareToReadCardInfoOnce(_ storeSwipedCard: Bool, shouldReadPreInsertedCard: Bool, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
+    DispatchQueue.main.async {
+      MobilePaymentsSDK.shared.readCardInfoManager.prepareToReadCardInfoOnce(withStoreSwipedCard: storeSwipedCard, shouldReadPreInsertedCard: shouldReadPreInsertedCard)
+      resolve("ReadCardInfoManager prepareToReadCardInfoOnce completed")
+    }
+  }  
 
   @objc
   func addReaderObserver(_ resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
@@ -294,5 +318,17 @@ extension SquareMobilePayments: ReaderObserver {
   func readerDidChange(_ readerInfo: ReaderInfo, change: ReaderChange) {
       print("[Square Reader] reader was changed!", readerInfo)
     sendEvent(withName: "READER_CHANGED", body: ["readerInfo": Mappers.mapFromReader(readerInfo), "change": Mappers.mapFromChange(change)])
+  }
+}
+
+extension SquareMobilePayments: ReadCardInfoObserver {
+  func readCardInfoDidFail(_ error: ReadCardInfoError) {
+      print("[Square Reader] read card info failed!", error)
+    sendEvent(withName: "READ_CARDINFO_FAILED", body: ["error": Mappers.mapFromReadCardInfoError(error)])
+  }
+
+  func readCardInfoDidSucceed(_ handle: CardHandle) {
+      print("[Square Reader] read card info succeeded!", handle)
+      sendEvent(withName: "READ_CARDINFO_SUCCEEDED", body: ["handle": Mappers.mapFromCardHandle(handle)])
   }
 }

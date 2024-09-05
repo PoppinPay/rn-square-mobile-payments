@@ -27,6 +27,15 @@ RCT_EXTERN_METHOD(startPayment:(NSDictionary *)paymentParams
                   resolve:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject)
 
+RCT_EXTERN_METHOD(addReadCardInfoObserver:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
+
+RCT_EXTERN_METHOD(removeReadCardInfoObserver:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
+
+RCT_EXTERN_METHOD(prepareToReadCardInfoOnce:(BOOL)storeSwipedCard
+                  shouldReadPreInsertedCard:(BOOL)locationId
+                  resolve:(RCTPromiseResolveBlock)resolve
+                  reject:(RCTPromiseRejectBlock)reject)
+
 RCT_EXTERN_METHOD(addReaderObserver:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
 
 RCT_EXTERN_METHOD(removeReaderObserver:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)

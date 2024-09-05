@@ -39,6 +39,25 @@ export const cancelPayment = (): Promise<void> => {
   return SquareMobilePayments.cancelPayment();
 };
 
+export const addReadCardInfoObserver = (): Promise<void> => {
+  console.log('Running addReadCardInfoObserver');
+  return SquareMobilePayments.addReadCardInfoObserver();
+};
+
+export const removeReadCardInfoObserver = (): Promise<void> => {
+  return SquareMobilePayments.removeReadCardInfoObserver();
+};
+
+export const prepareToReadCardInfoOnce = (
+  storeSwipedCard: boolean,
+  shouldReadPreInsertedCard: boolean
+): Promise<string> => {
+  return SquareMobilePayments.SquareMobilePayments(
+    storeSwipedCard,
+    shouldReadPreInsertedCard
+  );
+};
+
 export const addReaderObserver = (): Promise<void> => {
   console.log('Running addreader observer');
   return SquareMobilePayments.addReaderObserver();

@@ -4,7 +4,7 @@ import {
   ReaderModel,
   ReaderState,
 } from './enums';
-import type { BatteryLevel } from './enums';
+import type { BatteryLevel, ReadCardInfoEventType } from './enums';
 
 export type SquarePaymentParams = {
   autoComplete?: boolean;
@@ -93,5 +93,33 @@ export type ISquareEventListener = {
   (
     event: ReaderEventType.READER_REMOVED,
     callback: (event: RemoveReaderEvent) => void
+  ): void;
+};
+
+export interface CardHandle {
+  brand: string;
+  cardholderName?: string;
+  entryMethod: string;
+  id: string;
+  isSwipedCardStored: boolean;
+  last4?: string;
+}
+
+export interface ReadCardInfoFailedEvent {
+  error?: string;
+}
+
+export interface ReadCardInfoSucceededEvent {
+  handle: CardHandle;
+}
+
+export type ISquareReadCardInfoEventListener = {
+  (
+    event: ReadCardInfoEventType.READ_CARDINFO_FAILED,
+    callback: (event: ReadCardInfoFailedEvent) => void
+  ): void;
+  (
+    event: ReadCardInfoEventType.READ_CARDINFO_SUCCEEDED,
+    callback: (event: ReadCardInfoSucceededEvent) => void
   ): void;
 };
