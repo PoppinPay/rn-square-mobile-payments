@@ -52,7 +52,7 @@ export const prepareToReadCardInfoOnce = (
   storeSwipedCard: boolean,
   shouldReadPreInsertedCard: boolean
 ): Promise<string> => {
-  return SquareMobilePayments.SquareMobilePayments(
+  return SquareMobilePayments.prepareToReadCardInfoOnce(
     storeSwipedCard,
     shouldReadPreInsertedCard
   );
